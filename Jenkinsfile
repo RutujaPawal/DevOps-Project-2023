@@ -27,7 +27,7 @@ pipeline{
 
             steps{
                script{  
-                   mvnTest()
+                   Integration Test maven()
                }
             }       
         }
