@@ -34,11 +34,12 @@ pipeline{
                }
             }       
         }
-        stage("Static code analysis: Sonarqube Test maven"){
+        stage("Static code analysis: Sonarqube"){
             when { expression {  params.action == 'create' } }
             steps{
                script{  
-                   statiCodeAnalysis()
+                   def SonarQubecredentialsId = 'sonarqube-api'
+                   statiCodeAnalysis(SonarQubecredentialsId)
                }
             }       
         }       
