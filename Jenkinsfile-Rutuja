@@ -9,6 +9,7 @@ pipeline{
         string(name: 'aws_account_id', description: " AWS Account ID", defaultValue: '801646209932')
         string(name: 'Region', description: "Region of ECR", defaultValue: 'us-east-1')
         string(name: 'ECR_REPO_NAME', description: "name of the ECR", defaultValue: 'devops-docker-image')
+        string(name: 'cluster', description: "name of the EKS Cluster", defaultValue: 'DevOps-cluster')
     }
     environment{
         ACCESS_KEY = credentials('AWS_ACCESS_KEY_ID')
@@ -106,6 +107,19 @@ pipeline{
                     dockerImageCleanup("${params.aws_account_id}","${params.Region}","${params.ECR_REPO_NAME}")
                 }
              }
-        } 
+        }
+        stage('Connect to EKS '){
+            when { expression {  params.action == 'create' } }
+        steps{
+            script{
+                sh """
+                aws configure set aws_access_key_id "$ACCESS_KEY"
+                aws configure set aws_secret_access_key "$SECRET_KEY"
+                aws configure set region "${params.Region}"
+                aws eks --region ${params.Region} update-kubeconfig --name ${params.cluster}
+                """
+            }
+        }
+      }  
     }    
 }
