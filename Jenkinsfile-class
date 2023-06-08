@@ -141,7 +141,7 @@ pipeline{
 
                     sh """
                     aws eks --region ${params.Region} update-kubeconfig --name ${params.cluster}
-                    kubectl apply -f .
+                    kubectl apply -f deployment.yaml
                     """
                   }
                 }
