@@ -16,7 +16,7 @@ spec:
       - name: myjavaapp
         image: 801646209932.dkr.ecr.us-east-1.amazonaws.com/devops-docker-image
         ports:
-        - containerPort: 8080
+        - containerPort: 8085
 
 ---
 apiVersion: v1
@@ -29,5 +29,5 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: 8080
+    targetPort: 8085
   type: LoadBalancer
