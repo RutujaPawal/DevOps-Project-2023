@@ -138,7 +138,6 @@ pipeline{
                     currentBuild.result  = 'UNSTABLE'
                   }
                   if(apply){
-                    withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
                     sh "kubectl apply -f deployment.yaml"              
                   }
                 }
