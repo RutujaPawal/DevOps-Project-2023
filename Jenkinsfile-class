@@ -138,11 +138,8 @@ pipeline{
                     currentBuild.result  = 'UNSTABLE'
                   }
                   if(apply){
-
-                    sh """
-                    aws eks --region ${params.Region} update-kubeconfig --name ${params.cluster}
-                    kubectl apply -f deployment.yaml
-                    """
+                    withKubeConfig(caCertificate: '', clusterName: '', contextName: '', credentialsId: 'K8S', namespace: '', serverUrl: '') {
+                    sh "kubectl apply -f eks-deploy-from-ecr.yaml"              
                   }
                 }
             }
