@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    environment {
+        AWS_REGION = 'us-east-1'
+        EKS_CLUSTER_NAME = 'demo-eks'
+    }
+
+    stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Assume IAM role using AWS CLI
+                    withAWS(credentialsId: 'eks-jenkis-id',region: AWS_REGION) {
+                        sh "aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}"
+                        sh "eksctl get cluster --name demo-eks --region us-east-1"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                // Example deployment step
+                sh "kubectl apply -f your-manifest.yaml"
+            }
+        }
+    }
+}
