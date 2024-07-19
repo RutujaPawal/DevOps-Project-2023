@@ -18,12 +18,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy') {
-            steps {
-                // Example deployment step
-                sh "kubectl apply -f your-manifest.yaml"
-            }
-        }
     }
 }
