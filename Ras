@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add your actual build steps here
+            }
+        }
+
+        stage('Trigger First Pipeline') {
+            steps {
+                // Trigger the first pipeline with parameters
+                build job: 'FirstPipelineJob', // Replace with the actual job name
+                      parameters: [
+                          string(name: 'PARAM1', value: 'value1'),
+                          string(name: 'PARAM2', value: 'value2')
+                      ]
+            }
+        }
+
+        stage('Trigger Second Pipeline') {
+            steps {
+                // Trigger the second pipeline with different parameters
+                build job: 'SecondPipelineJob', // Replace with the actual job name
+                      parameters: [
+                          string(name: 'PARAM3', value: 'value3'),
+                          string(name: 'PARAM4', value: 'value4')
+                      ]
+            }
+        }
+    }
+}
