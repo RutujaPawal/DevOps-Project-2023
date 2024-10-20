@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Extract URL Segment Dynamically') {
+            steps {
+                script {
+                    // Use shell script to dynamically extract the desired segments from the URL
+                    sh '''
+                        # Original dynamic URL
+                        URL="https://Nexus306.systems.uk.hsbc.8081/Nexus/repository/maven-hsbc-internal-dev_dev_n3p/com/hsbc/gra/flow/ras-configuration-PROD-1.1.1.tar.gz"
+                        
+                        # Dynamically extract the last 3 segments and remove the file extension
+                        EXTRACTED_PART=$(echo $URL | awk -F'/' '{print $(NF-2)"/"$(NF-1)"/"}')
+
+                        # Output the extracted part
+                        echo "Extracted Part: $EXTRACTED_PART"
+                    '''
+                }
+            }
+        }
+    }
+}
